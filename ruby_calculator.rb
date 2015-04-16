@@ -2,11 +2,11 @@ def is_a_number?(input)
   input.to_i.to_s == input || input.to_f.to_s == input
 end
 
-def check_operator(operator)
+def is_an_operator?(operator)
   %w(+ - * /).include? operator
 end
 
-def restart
+def restart?
   puts "\nDo you want to go again? y/n"
   answer = gets.chomp
   answer.downcase == "y"
@@ -15,7 +15,7 @@ end
 def compute(numbers)
   puts "Choose an operator : +, -, *, /"
   operator = gets.chomp
-  if check_operator(operator)
+  if is_an_operator?(operator)
     if numbers.to_s.count(".") > 0 || operator == "/"
       numbers.map!(&:to_f)
     else
@@ -23,7 +23,7 @@ def compute(numbers)
     end
     result = numbers.inject(operator.to_sym)
     puts "##### Result is #{result} #####"
-    start_calculator if restart
+    start_calculator if restart?
   else
     puts "Invalid Operator!"
     compute(numbers)
