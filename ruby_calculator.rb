@@ -1,24 +1,19 @@
-# calculator will accept both float and integer, reject inputs with commas
-# and more than one periods
 def check_input(input)
   input_valid = !(input.count(".") > 1 || input.count(",") > 0)
   input_float = input.to_f != 0.0 || input.to_s == "0" || input.to_s == "0.0"
   input_valid && input_float
 end
 
-# check if operator is valid
 def check_operator(operator)
   %w(+ - * /).include? operator
 end
 
-# re-start calculator?
 def restart
   puts "\nDo you want to go again? y/n"
   answer = gets.chomp
   answer.downcase == "y"
 end
 
-# actual computation of numbers array based on operator given
 def compute(numbers)
   puts "Choose an operator : +, -, *, /"
   operator = gets.chomp
@@ -37,7 +32,6 @@ def compute(numbers)
   end
 end
 
-# start the calculator, stop the loop once max input is reached
 def start_calculator
   question   = "Give me your first number:"
   numbers    = []
