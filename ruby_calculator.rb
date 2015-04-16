@@ -1,7 +1,5 @@
-def check_input(input)
-  input_valid = !(input.count(".") > 1 || input.count(",") > 0)
-  input_float = input.to_f != 0.0 || input.to_s == "0" || input.to_s == "0.0"
-  input_valid && input_float
+def is_a_number?(input)
+  input.to_i.to_s == input || input.to_f.to_s == input
 end
 
 def check_operator(operator)
@@ -45,7 +43,7 @@ def start_calculator
   loop do
     puts question
     answer = gets.chomp
-    if check_input(answer)
+    if is_a_number?(answer)
       numbers << answer
       if numbers.size == max_inputs
         compute(numbers)
