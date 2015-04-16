@@ -1,6 +1,7 @@
 def ask
   puts "-----------------------------"
-  puts "CHOOSE: rock, paper, scissors"
+  puts "   Rock, Paper or Scissors?  "
+  puts "     CHOOSE ONE: R, P, S     "
   puts "-----------------------------"
   answer = gets.chomp
 end
@@ -98,7 +99,7 @@ end
 def rock_paper_scissors(clear = 0)
   clear_screen if clear == 0
 
-  options        =  %w(rock paper scissors)
+  options        =  %w(r p s)
   answer_user    =  ask.downcase
 
   if valid_answer?(options,answer_user)
