@@ -1,4 +1,4 @@
-def ask
+def player_pick
   puts "-----------------------------"
   puts "   Rock, Paper or Scissors?  "
   puts "     CHOOSE ONE: R, P, S     "
@@ -103,7 +103,7 @@ def rock_paper_scissors(clear = 0)
   clear_screen if clear == 0
 
   options        =  %w(r p s)
-  answer_user    =  ask.downcase
+  answer_user    =  player_pick.downcase
 
   if valid_answer?(options,answer_user)
     answer_computer       = computer_pick(options)
