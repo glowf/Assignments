@@ -8,11 +8,11 @@ end
 def display_hand(choice,player)
   case choice
   when 0
-    display_rock player
+    display_rock(player)
   when 1
-    display_paper player
+    display_paper(player)
   when 2
-    display_scissors player
+    display_scissors(player)
   end
 end
 
