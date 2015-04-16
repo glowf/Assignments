@@ -96,6 +96,7 @@ def display_winner(winner)
     text = 'It\'s a draw... (ಠ_ಠ)'
   end
   text = '••••••  ' + text + '  ••••••'
+  puts text
 end
 
 def rock_paper_scissors(clear = 0)
@@ -114,7 +115,7 @@ def rock_paper_scissors(clear = 0)
     display_hand(answer_computer_index, "Computer")
 
     winner = check_winner(answer_user_index, answer_computer_index)
-    puts display_winner winner
+    display_winner(winner)
     puts ""
 
     rock_paper_scissors if again?
