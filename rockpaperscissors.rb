@@ -76,6 +76,8 @@ def check_winner(user,computer)
       'draw'
     elsif user == 0 && computer == 2
       'user'
+    elsif computer == 0 && user == 2
+      'computer'
     elsif user > computer
       'user'
     else
