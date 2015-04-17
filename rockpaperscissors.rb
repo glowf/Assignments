@@ -99,8 +99,8 @@ end
 def rock_paper_scissors(clear = true)
   clear_screen if clear == true
 
-  options        =  %w(r p s)
-  answer_user    =  player_pick.downcase
+  options      =  %w(r p s)
+  answer_user  =  player_pick.downcase
 
   if valid_answer?(options,answer_user)
     answer_computer = computer_pick(options)
