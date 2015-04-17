@@ -3,16 +3,16 @@ def player_pick
   puts "   Rock, Paper or Scissors?  "
   puts "     CHOOSE ONE: R, P, S     "
   puts "-----------------------------"
-  answer = gets.chomp
+  gets.chomp
 end
 
 def display_hand(choice,player)
   case choice
-  when 0
+  when 'r'
     display_rock(player)
-  when 1
+  when 'p'
     display_paper(player)
-  when 2
+  when 's'
     display_scissors(player)
   end
 end
@@ -71,18 +71,15 @@ def again?
 end
 
 def check_winner(user,computer)
-  winner =
-    if user == computer
-      'draw'
-    elsif user == 0 && computer == 2
-      'user'
-    elsif computer == 0 && user == 2
-      'computer'
-    elsif user > computer
-      'user'
-    else
-      'computer'
-    end
+  if user == computer
+    'draw'
+  elsif (user == 'r' && computer == 's') ||
+        (user == 's' && computer == 'p') ||
+        (user == 'p' && computer == 'r')
+    'user'
+  else
+    'computer'
+  end
 end
 
 def display_winner(winner)
@@ -99,29 +96,26 @@ def display_winner(winner)
   puts text
 end
 
-def rock_paper_scissors(clear = 0)
-  clear_screen if clear == 0
+def rock_paper_scissors(clear = true)
+  clear_screen if clear == true
 
   options        =  %w(r p s)
   answer_user    =  player_pick.downcase
 
   if valid_answer?(options,answer_user)
-    answer_computer       = computer_pick(options)
-    answer_user_index     = options.index(answer_user)
-    answer_computer_index = options.index(answer_computer)
+    answer_computer = computer_pick(options)
+    winner = check_winner(answer_user, answer_computer)
 
     puts ""
-    display_hand(answer_user_index, "You")
-    display_hand(answer_computer_index, "Computer")
-
-    winner = check_winner(answer_user_index, answer_computer_index)
+    display_hand(answer_user, "You")
+    display_hand(answer_computer, "Computer")
     display_winner(winner)
     puts ""
 
     rock_paper_scissors if again?
   else
     puts "Invalid choice."
-    rock_paper_scissors(1)
+    rock_paper_scissors(false)
   end
 end
 
