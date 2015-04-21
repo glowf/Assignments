@@ -33,11 +33,12 @@ end
 
 def display_board(board,rows,cols,win,winning_combination=[])
   display_title
-  puts "\n You need #{win} to win"
+  puts ""
+  puts "You'll need #{win} to win".center(60)
   counter = 0
-  puts "\n" + " " * 8 +  ("-" * cols * 6)
+  puts "\n" + " " * ((11 - cols) * 2.5) +  ("-" * cols * 6)
   rows.times do |x|
-    print " " * 7 + "|"
+    print " " * ((11 - cols) * 2.5) + "|"
     cols.times do |y|
       if winning_combination.flatten.include?(counter)
         print "#{board[counter]}".blink #blink winning slots
@@ -47,7 +48,7 @@ def display_board(board,rows,cols,win,winning_combination=[])
       print "|"
       counter+=1
     end
-    puts "\n" + " " * 8 +  ("-" * cols * 6)
+    puts "\n" + " " * ((11 - cols) * 2.5) +  ("-" * cols * 6)
   end
   puts "\n"
 end
