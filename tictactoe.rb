@@ -248,7 +248,7 @@ def tictactoe
               player_pick_slot(board)
            else
               puts "Computer is choosing..."
-              sleep 0.5
+              sleep 0.3
               computer_pick_slot(board,winning_combinations,win)
            end
 
