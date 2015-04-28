@@ -171,10 +171,8 @@ def player_move(deck, money, bet, name, dealer_cards, player_cards, hit = false)
     else
       move = 'stay'
     end
-  elsif total_player == 21
-    move = 'stay'
-  else
-    move = 'bust'
+  elsif total_player == 21 then move = 'stay'
+  else move = 'bust'
   end
 end
 
@@ -189,20 +187,24 @@ def blackjack(again = false, name = '', money = 500, deck = shuffle_deck)
   clear_screen
   draw_title
 
-  if again == false
-    name = get_name
+  name = get_name if again == false
+  bet = get_bet(money, name)
+  money -= bet
+
+  if deck.length <= 26
+    deck = shuffle_deck
+    puts "\nDeck has been shuffled."
+    sleep 1.2
   end
 
   dealer_cards.push(deck.pop,deck.pop)
   player_cards.push(deck.pop,deck.pop)
 
-  bet = get_bet(money, name)
-  money -= bet
-
   result_player = player_move(deck, money, bet, name, dealer_cards, player_cards)
 
   if result_player == 'stay'
     result_dealer = dealer_move(deck, money, bet, name, dealer_cards, player_cards, false)
+
     if  result_dealer == 'bust'
       message = "Dealer busts! You win $#{bet}!"
       money += bet * 2
@@ -220,6 +222,7 @@ def blackjack(again = false, name = '', money = 500, deck = shuffle_deck)
         money += bet
       end
     end
+
   elsif result_player == 'bust'
     message = "Bust! You lose $#{bet}"
   end
@@ -232,7 +235,7 @@ def blackjack(again = false, name = '', money = 500, deck = shuffle_deck)
   puts "\nYour current balance is $#{money}. "
 
   if money == 0
-    puts "Sorry, you're bankrupt."
+    puts "Sorry #{name}, you have no money left.\n\n"
   else
     continue = play_again
     case continue
