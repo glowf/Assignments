@@ -133,7 +133,7 @@ def build_deck
 end
 
 def shuffle_deck
-  build_deck.shuffle
+  build_deck.shuffle!
 end
 
 def play_again
