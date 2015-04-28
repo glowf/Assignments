@@ -72,12 +72,12 @@ end
 def add_cards(cards)
   total = 0
   card_values = cards.map do |card|
-                          if card[0].match(/[[:alpha:]]/) && card[0] != 'A'
-                             '10'
-                          else
-                            card[0]
-                          end
-                        end
+                  if card[0].match(/[[:alpha:]]/) && card[0] != 'A'
+                    '10'
+                  else
+                    card[0]
+                  end
+                end
 
   card_values.sort.each_with_index do |card, index|                             #sort is important because this puts all As at the end of the array
     if card  == 'A'
