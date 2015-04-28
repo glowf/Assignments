@@ -197,8 +197,8 @@ def blackjack(again = false, name = '', money = 500, deck = shuffle_deck)
 
   if deck.length <= 26
     deck = shuffle_deck
-    puts "\nDeck has been shuffled."
-    sleep 1.2
+    puts "\nPlease wait while I reshuffle the deck..."
+    sleep 1.3
   end
 
   dealer_cards.push(deck.pop,deck.pop)
@@ -228,7 +228,7 @@ def blackjack(again = false, name = '', money = 500, deck = shuffle_deck)
     end
 
   elsif result_player == 'bust'
-    message = "Bust! You lose $#{bet}"
+    message = "Bust! You lose $#{bet} (╥﹏╥)"
   end
 
   sleep 0.5
