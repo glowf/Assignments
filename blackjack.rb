@@ -94,7 +94,6 @@ def add_cards(cards)
        total += card.to_i
     end
   end
-
   total
 end
 
@@ -120,16 +119,19 @@ def get_player_move
   print "Hit or Stay? [H/S] "
   move = gets.chomp.downcase
   case move
-  when 'h'then 'hit'
-  when 's'then 'stay'
-  else  get_player_move
+  when 'h'
+    'hit'
+  when 's'
+    'stay'
+  else
+    get_player_move
   end
 end
 
 def build_deck
   suits = ['d','h','s','c']
   card_values = ('2'..'10').to_a + ['J','Q','K','A']
-  deck = card_values.product(suits)
+  card_values.product(suits)
 end
 
 def shuffle_deck
@@ -153,9 +155,9 @@ def dealer_move(deck, money, bet, name, dealer_cards, player_cards,
      puts "Dealer hits"
      dealer_move(deck, money, bet, name, dealer_cards, player_cards, false, true)
    elsif  total_dealer <= 21
-    move = 'stay'
+     'stay'
    else
-    move = 'bust'
+     'bust'
    end
 end
 
@@ -169,10 +171,12 @@ def player_move(deck, money, bet, name, dealer_cards, player_cards, hit = false)
     if move == 'hit'
       player_move(deck, money, bet, name, dealer_cards, player_cards, true)
     else
-      move = 'stay'
+      'stay'
     end
-  elsif total_player == 21 then move = 'stay'
-  else move = 'bust'
+  elsif total_player == 21
+    'stay'
+  else
+    'bust'
   end
 end
 
