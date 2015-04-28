@@ -84,7 +84,7 @@ def add_cards(cards)
       if cards[index+1] == 'A'                                                  #force the first A to have value of 1 if next card is an A
         total += 1
       else
-       if (total + 11) <= 21
+       if (total + 11) <= 21 then
          total += 11
        else
          total += 1
