@@ -5,14 +5,14 @@ def clear_screen
 end
 
 def draw_title
-  puts " _     _            _    _            _            "
-  puts "| |   | |          | |  (_)          | |           "
-  puts "| |__ | | __ _  ___| | ___  __ _  ___| | __        "
-  puts "| '_ \\| |/ _` |/ __| |/ / |/ _` |/ __| |/ /       "
-  puts "| |_) | | (_| | (__|   <| | (_| | (__|   <         "
-  puts "|_.__/|_|\\__,_|\\___|_|\\_\\ |\\__,_|\\___|_|\\_\\"
-  puts "                       _/ |                "
-  puts "                      |__/                 "
+  puts " _     _            _    _            _             "
+  puts "| |   | |          | |  (_)          | |            "
+  puts "| |__ | | __ _  ___| | ___  __ _  ___| | __         "
+  puts "| '_ \\| |/ _` |/ __| |/ / |/ _` |/ __| |/ /        "
+  puts "| |_) | | (_| | (__|   <| | (_| | (__|   <          "
+  puts "|_.__/|_|\\__,_|\\___|_|\\_\\ |\\__,_|\\___|_|\\_\\ "
+  puts "                       _/ |                         "
+  puts "                      |__/                          "
 end
 
 def draw_cards(cards, hide)
@@ -84,7 +84,7 @@ def add_cards(cards)
       if cards[index+1] == 'A'                                                  #force the first A to have value of 1 if next card is an A
         total += 1
       else
-       if (total + 11) <= 21 then
+       if (total + 11) <= 21
          total += 11
        else
          total += 1
