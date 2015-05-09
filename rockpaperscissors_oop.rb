@@ -38,16 +38,16 @@ class Hand
   end
 
   def >(other_hand)
-    (self.value == get_rock && other_hand.value == get_scissors) ||
-    (self.value == get_scissors && other_hand.value == get_paper) ||
-    (self.value == get_paper && other_hand.value == get_rock)
+    (self.value == rock     && other_hand.value == scissors) ||
+    (self.value == scissors && other_hand.value == paper)    ||
+    (self.value == paper    && other_hand.value == rock)
   end
 
   def to_s
     case value
-    when get_rock     then  "rock"
-    when get_scissors then  "scissors"
-    when get_paper    then  "paper"
+    when rock     then  "rock"
+    when scissors then  "scissors"
+    when paper    then  "paper"
     end
   end
 
@@ -55,23 +55,23 @@ class Hand
     OPTIONS.join("/")
   end
 
-  def get_rock
+  def rock
     OPTIONS[0]
   end
 
-  def get_paper
+  def paper
     OPTIONS[1]
   end
 
-  def get_scissors
+  def scissors
     OPTIONS[2]
   end
 
   def display_hand
     case value
-    when get_rock     then  display_rock
-    when get_paper    then  display_paper
-    when get_scissors then  display_scissors
+    when rock     then  display_rock
+    when scissors then  display_scissors
+    when paper    then  display_paper
     end
   end
 
