@@ -38,9 +38,9 @@ class Hand
   end
 
   def >(other_hand)
-    (isRock?     && other_hand.isScissors?) ||
-    (isScissors? && other_hand.isPaper?)    ||
-    (isPaper?    && other_hand.isRock?)
+    (rock?     && other_hand.scissors?) ||
+    (scissors? && other_hand.paper?)    ||
+    (paper?    && other_hand.rock?)
   end
 
   def to_s
@@ -55,15 +55,15 @@ class Hand
     OPTIONS.join("/")
   end
 
-  def isRock?
+  def rock?
     value == rock
   end
 
-  def isScissors?
+  def scissors?
     value == scissors
   end
 
-  def isPaper?
+  def paper?
     value == paper
   end
 
