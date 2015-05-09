@@ -34,13 +34,13 @@ class Hand
   end
 
   def ==(other_hand)
-    self.value == other_hand.value
+    value == other_hand.value
   end
 
   def >(other_hand)
-    (self.value == rock     && other_hand.value == scissors) ||
-    (self.value == scissors && other_hand.value == paper)    ||
-    (self.value == paper    && other_hand.value == rock)
+    (isRock?     && other_hand.isScissors?) ||
+    (isScissors? && other_hand.isPaper?)    ||
+    (isPaper?    && other_hand.isRock?)
   end
 
   def to_s
@@ -53,6 +53,18 @@ class Hand
 
   def self.show_options
     OPTIONS.join("/")
+  end
+
+  def isRock?
+    value == rock
+  end
+
+  def isScissors?
+    value == scissors
+  end
+
+  def isPaper?
+    value == paper
   end
 
   def rock
@@ -112,9 +124,9 @@ end
 class Game
   attr_reader :human, :computer
 
-  def initialize(human, computer)
-    @human = human
-    @computer = computer
+  def initialize
+    @human    = Human.new("You")
+    @computer = Computer.new("Computer")
   end
 
   def start
@@ -133,13 +145,13 @@ class Game
   end
 
   def display_winner
-    if human.hand == computer.hand
-      text = "It\'s a draw... (ಠ_ಠ)"
-    elsif human.hand > computer.hand
-      text = "Yey, #{human.name} won! \(•◡•)/"
-    else
-      text = "Sorry, #{human.name} lost! (ಥ﹏ಥ)"
-    end
+    text = if human.hand == computer.hand
+             "It\'s a draw... (ಠ_ಠ)"
+          elsif human.hand > computer.hand
+             "Yey, #{human.name} won! \(•◡•)/"
+          else
+            "Sorry, #{human.name} lost! (ಥ﹏ಥ)"
+          end
     puts "•••••• #{text} ••••••\n\n"
   end
 
@@ -166,4 +178,4 @@ class Game
   end
 end
 
-Game.new(Human.new("You"),Computer.new("Computer")).start
+Game.new.start
