@@ -127,16 +127,15 @@ class Game
     human.show_hand
     puts "#{computer.name} chose #{computer.hand}"
     computer.show_hand
-
-    display_winner(human.hand, computer.hand)
+    display_winner
 
     again? ? start : display_bye
   end
 
-  def display_winner(human_hand, computer_hand)
-    if human_hand == computer_hand
+  def display_winner
+    if human.hand == computer.hand
       text = "It\'s a draw... (ಠ_ಠ)"
-    elsif human_hand > computer_hand
+    elsif human.hand > computer.hand
       text = "Yey, #{human.name} won! \(•◡•)/"
     else
       text = "Sorry, #{human.name} lost! (ಥ﹏ಥ)"
