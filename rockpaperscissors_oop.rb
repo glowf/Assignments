@@ -140,7 +140,7 @@ class Game
     else
       text = "Sorry, #{human.name} lost! (ಥ﹏ಥ)"
     end
-    puts "••••••  #{text} ••••••\n\n"
+    puts "•••••• #{text} ••••••\n\n"
   end
 
   def again?
