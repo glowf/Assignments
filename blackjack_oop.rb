@@ -296,7 +296,8 @@ class Game
   end
 
   def dealers_move
-    ceiling = player.hand_total >= Dealer::HIT_REQUIREMENT ? ceiling = player.hand_total : Dealer::HIT_REQUIREMENT
+    #ceiling = player.hand_total >= Dealer::HIT_REQUIREMENT ? ceiling = player.hand_total : Dealer::HIT_REQUIREMENT
+    ceiling = Dealer::HIT_REQUIREMENT
     while dealer.hand_total < ceiling do
       dealer.hit(deck.deal)
       sleep 0.5
