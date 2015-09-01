@@ -48,7 +48,6 @@ class Board
 
   def cell_index(cell)
     cell - 1
-
   end
 
   def board_cells_values
@@ -56,9 +55,7 @@ class Board
   end
 
   def mark_cell(cell, marker, color)
-
     cell = cell_index(cell)
-
     board_cells[cell].mark(marker,color)
   end
 
@@ -130,10 +127,7 @@ class Board
         combinations
     end
 
-    winning_rows = rows_combinations(array_rows)
-    winning_columns = columns_combinations(array_rows)
-    winning_diagonals = diagonal_combinations(array_rows)
-    winning_rows + winning_columns + winning_diagonals
+    rows_combinations(array_rows) + columns_combinations(array_rows) + diagonal_combinations(array_rows)
   end
 
 end
@@ -203,11 +197,9 @@ class Computer < Player
       if (num_my_markers  == num_consecutive) && (sum_board_values > 0)
          win_pos << combination
       end
-
       if (num_opponent_markers == num_consecutive) && (sum_board_values > 0)
          block_pos << combination
       end
-
       if (num_my_markers>=1) && (num_opponent_markers == 0)
          best_pos << combination
       end
@@ -338,7 +330,6 @@ class Game
     end
 
     start if again?
-
   end
 end
 
