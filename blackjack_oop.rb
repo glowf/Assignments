@@ -107,14 +107,6 @@ class Player
     hand.hand=([])
   end
 
-  def hand_contents
-    hand.cards
-  end
-
-  def hand_size
-    hand.size
-  end
-
   def hand_total
     hand.total
   end
@@ -175,10 +167,6 @@ class Hand
     hand << card
   end
 
-  def size
-    hand.size
-  end
-
   def card_values
     hand.map(&:value)
   end
@@ -230,7 +218,6 @@ end
 
 class Game
   BLACKJACK = 21
-
   attr_reader :deck, :player, :dealer
 
   def initialize
@@ -309,7 +296,8 @@ class Game
   end
 
   def dealers_move
-    while dealer.hand_total < Dealer::HIT_REQUIREMENT do
+    ceiling = player.hand_total >= Dealer::HIT_REQUIREMENT ? ceiling = player.hand_total : Dealer::HIT_REQUIREMENT
+    while dealer.hand_total < ceiling do
       dealer.hit(deck.deal)
       sleep 0.5
       puts "Dealer hits"
@@ -373,7 +361,7 @@ class Game
        initial_cards
        draw_table(true)
        players_move if player.hand_total != BLACKJACK
-       draw_table #player done, now don't hide dealers cards
+       draw_table #player done,  don't hide dealers card from now on
        if player.hand_total <= BLACKJACK
            dealers_move
 
