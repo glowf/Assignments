@@ -48,6 +48,7 @@ class Board
 
   def cell_index(cell)
     cell - 1
+
   end
 
   def board_cells_values
@@ -55,7 +56,9 @@ class Board
   end
 
   def mark_cell(cell, marker, color)
+
     cell = cell_index(cell)
+
     board_cells[cell].mark(marker,color)
   end
 
@@ -137,7 +140,6 @@ end
 
 
 class Cell
-
   attr_accessor :value, :color
 
   def initialize(value,color="black")
@@ -153,12 +155,9 @@ class Cell
   def available?
     @value.to_i >= 1
   end
-
 end
 
-
 class Player
-
   attr_reader :name, :marker, :color
 
   def initialize(name, marker, color)
@@ -166,12 +165,9 @@ class Player
     @marker = marker
     @color = color
   end
-
 end
 
-
 class Human < Player
-
   def select_position(args)
     loop do
        print "Select your position: "
@@ -180,7 +176,6 @@ class Human < Player
        print "Sorry, position ##{position} is already taken or invalid.\n".red
     end
   end
-
 end
 
 class Computer < Player
@@ -197,25 +192,40 @@ class Computer < Player
   end
 
   def best_position(board_values, winning_combinations, marker_opponent, num_consecutive)
-    win_pos = winning_combinations.select do |combination|
-      board_values.values_at(*combination).count(self.marker) == num_consecutive &&
-      board_values.values_at(*combination).map(&:to_i).reduce(:+)>0
+
+    win_pos, block_pos, best_pos = [],[],[]
+
+    winning_combinations.each do |combination|
+      num_opponent_markers =  board_values.values_at(*combination).count(marker_opponent)
+      num_my_markers       =  board_values.values_at(*combination).count(self.marker)
+      sum_board_values     =  board_values.values_at(*combination).map(&:to_i).reduce(:+)
+
+      if (num_my_markers  == num_consecutive) && (sum_board_values > 0)
+         win_pos << combination
+      end
+
+      if (num_opponent_markers == num_consecutive) && (sum_board_values > 0)
+         block_pos << combination
+      end
+
+      if (num_my_markers>=1) && (num_opponent_markers == 0)
+         best_pos << combination
+      end
     end
 
-    block_pos = winning_combinations.select do |combination|
-      board_values.values_at(*combination).count(marker_opponent) == num_consecutive &&
-      board_values.values_at(*combination).map(&:to_i).reduce(:+)>0
-    end
-
-    if !win_pos.empty?
-       possible_pos =  win_pos.first.flatten
-    elsif !block_pos.empty?
-       possible_pos =  block_pos.first.flatten
-    end
+    possible_pos  = if !win_pos.empty?
+                      win_pos.first.flatten
+                    elsif !block_pos.empty?
+                      block_pos.first.flatten
+                    elsif !best_pos.empty?
+                      best_pos.first.flatten
+                    end
 
     if possible_pos != nil
       possible_pos = possible_pos - (possible_pos - @empty_cells.collect { |x| x-1})
+
       possible_pos[0]+1
+
     else
       random_position
     end
@@ -299,6 +309,12 @@ class Game
     end
   end
 
+  def again?
+    print "Want to play again? [Y/N] : "
+    answer = gets.chomp.upcase
+    true if answer != 'N'
+  end
+
   def start
     clear_screen
     display_title
@@ -321,7 +337,9 @@ class Game
        current_player = switch_player(current_player)
     end
 
+    start if again?
+
   end
 end
 
-Game.new(Human.new("Human", "x", "green"),Computer.new("Computer", "o", "blue")).start
+Game.new(Human.new("Human", "X", "green"),Computer.new("Computer", "O", "blue")).start
