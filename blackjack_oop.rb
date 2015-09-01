@@ -46,7 +46,6 @@ class Deck
   end
 end
 
-
 class Card
   attr_reader :facevalue, :suit, :value, :color
 
@@ -227,7 +226,6 @@ class Hand
       break if lines_total < 0
      end
   end
-
 end
 
 class Game
@@ -410,7 +408,6 @@ class Game
          puts "Sorry you'r bankrupt! (╥﹏╥)".red
        end
   end
-
 end
 
 Game.new
