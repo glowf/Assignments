@@ -110,7 +110,6 @@ class Board
           array_diagonal.push(diagonal_right).push(diagonal_left)
         end
      end
-
      array_diagonal = combinations([cols,rows].max,array_diagonal)
      array_diagonal.delete(nil)
      array_diagonal.select! { |x| x.length>=wins }
@@ -243,11 +242,11 @@ class Game
   def update_screen
     clear_screen
     display_title
-    @board.display_board
+    board.display_board
   end
 
   def settings
-    cols,rows,win = 0
+    cols,rows,win = 0, 0, 0
     loop do
       print "How many columns: "
       cols = gets.chomp.to_i
@@ -271,13 +270,13 @@ class Game
 
   def place_marker(player)
     position = player.select_position({
-                empty_cells: @board.empty_cells,
-                values: @board.board_cells_values,
-                combinations: @board.winning_combinations,
-                wins: @board.wins,
+                empty_cells: board.empty_cells,
+                values: board.board_cells_values,
+                combinations: board.winning_combinations,
+                wins: board.wins,
                 opponents_marker: switch_player(player).marker
                })
-    @board.mark_cell(position, player.marker, player.color)
+    board.mark_cell(position, player.marker, player.color)
   end
 
   def switch_player(player)
@@ -289,7 +288,7 @@ class Game
   end
 
   def winner(name=nil)
-    if name == nil
+    if name.nil?
       "It's a Tie"
     else
       "#{name} wins!!"
@@ -299,7 +298,7 @@ class Game
   def again?
     print "Want to play again? [Y/N] : "
     answer = gets.chomp.upcase
-    true if answer != 'N'
+    answer != 'N' ? true : false
   end
 
   def start
@@ -313,10 +312,10 @@ class Game
     loop do
       place_marker(current_player)
       update_screen
-       if @board.match?(current_player.marker)
+       if board.match?(current_player.marker)
          puts  "#{winner(current_player.name)}\n\n".center(60)
          break
-       elsif @board.board_filled?
+       elsif board.board_filled?
          puts  "#{winner}\n\n"
          break
        end
