@@ -80,56 +80,54 @@ class Board
   end
 
   def winning_combinations
-     array_rows = (0..rows*cols-1).each_slice(cols).to_a
+    array_rows = (0..rows*cols-1).each_slice(cols).to_a
 
-     def columns_combinations(array_rows)
-        array_cols = []
-        array_rows.each_index {|i| array_cols.push(array_rows.collect { |r| r[i]}) }
-        array_cols = wins < cols ? combinations(cols,array_cols) : array_cols
+    def columns_combinations(array_rows)
+      array_cols = []
+      array_rows.each_index {|i| array_cols.push(array_rows.collect { |r| r[i]}) }
+      array_cols = wins < cols ? combinations(cols,array_cols) : array_cols
     end
 
     def rows_combinations(array_rows)
-        array_rows = wins < rows ? combinations(rows,array_rows) : array_rows
+      array_rows = wins < rows ? combinations(rows,array_rows) : array_rows
     end
 
     def diagonal_combinations(array_rows)
-        array_diagonal = []
-        array_rows.each_with_index do |y,index_y|
-          y.each_with_index do |x,index_x|
-            diagonal_right = []
-            diagonal_left = []
-            rows.times do |counter|
-              row_num       = index_y + counter
-              col_num_right = index_x + counter
-              col_num_left  = index_x - counter
-              if array_rows[row_num] != nil
-                 diagonal_right << array_rows[row_num][col_num_right]if array_rows[row_num][col_num_right ] != nil
-                 diagonal_left  << array_rows[row_num][col_num_left] if array_rows[row_num][col_num_left] != nil && col_num_left>=0
-              end
+      array_diagonal = []
+      array_rows.each_with_index do |y,index_y|
+        y.each_with_index do |x,index_x|
+          diagonal_right = []
+          diagonal_left = []
+          rows.times do |counter|
+            row_num       = index_y + counter
+            col_num_right = index_x + counter
+            col_num_left  = index_x - counter
+            if array_rows[row_num] != nil
+              diagonal_right << array_rows[row_num][col_num_right]if array_rows[row_num][col_num_right ] != nil
+              diagonal_left  << array_rows[row_num][col_num_left] if array_rows[row_num][col_num_left] != nil && col_num_left>=0
             end
-            array_diagonal.push(diagonal_right).push(diagonal_left)
           end
+          array_diagonal.push(diagonal_right).push(diagonal_left)
         end
+     end
 
-      array_diagonal = combinations([cols,rows].max,array_diagonal)
-      array_diagonal.delete(nil)
-      array_diagonal.select! { |x| x.length>=wins}
+     array_diagonal = combinations([cols,rows].max,array_diagonal)
+     array_diagonal.delete(nil)
+     array_diagonal.select! { |x| x.length>=wins }
     end
 
     def combinations(row_or_col,combination)
-        combinations = []
-        combination.each  do |combination|
-          (row_or_col-wins+1).times do |x|
-            range = x..(x+wins-1)
-            combinations << combination[range]
-          end
+      combinations = []
+      combination.each  do |combination|
+        (row_or_col-wins+1).times do |x|
+          range = x..(x+wins-1)
+          combinations << combination[range]
         end
-        combinations
+      end
+      combinations
     end
-
     rows_combinations(array_rows) + columns_combinations(array_rows) + diagonal_combinations(array_rows)
   end
-
 end
 
 
@@ -164,10 +162,10 @@ end
 class Human < Player
   def select_position(args)
     loop do
-       print "Select your position: "
-       position = gets.chomp.to_i
-       return position if args[:empty_cells].include?(position)
-       print "Sorry, position ##{position} is already taken or invalid.\n".red
+      print "Select your position: "
+      position = gets.chomp.to_i
+      return position if args[:empty_cells].include?(position)
+      print "Sorry, position ##{position} is already taken or invalid.\n".red
     end
   end
 end
@@ -186,7 +184,6 @@ class Computer < Player
   end
 
   def best_position(board_values, winning_combinations, marker_opponent, num_consecutive)
-
     win_pos, block_pos, best_pos = [],[],[]
 
     winning_combinations.each do |combination|
@@ -195,13 +192,13 @@ class Computer < Player
       sum_board_values     =  board_values.values_at(*combination).map(&:to_i).reduce(:+)
 
       if (num_my_markers  == num_consecutive) && (sum_board_values > 0)
-         win_pos << combination
+        win_pos << combination
       end
       if (num_opponent_markers == num_consecutive) && (sum_board_values > 0)
-         block_pos << combination
+        block_pos << combination
       end
       if (num_my_markers>=1) && (num_opponent_markers == 0)
-         best_pos << combination
+        best_pos << combination
       end
     end
 
@@ -215,9 +212,7 @@ class Computer < Player
 
     if possible_pos != nil
       possible_pos = possible_pos - (possible_pos - @empty_cells.collect { |x| x-1})
-
       possible_pos[0]+1
-
     else
       random_position
     end
@@ -276,12 +271,12 @@ class Game
 
   def place_marker(player)
     position = player.select_position({
-           empty_cells: @board.empty_cells,
-           values: @board.board_cells_values,
-           combinations: @board.winning_combinations,
-           wins: @board.wins,
-           opponents_marker: switch_player(player).marker
-    })
+                empty_cells: @board.empty_cells,
+                values: @board.board_cells_values,
+                combinations: @board.winning_combinations,
+                wins: @board.wins,
+                opponents_marker: switch_player(player).marker
+               })
     @board.mark_cell(position, player.marker, player.color)
   end
 
@@ -316,19 +311,17 @@ class Game
     update_screen
 
     loop do
-       place_marker(current_player)
-       update_screen
-
+      place_marker(current_player)
+      update_screen
        if @board.match?(current_player.marker)
-          puts  "#{winner(current_player.name)}\n\n".center(60)
-          break
+         puts  "#{winner(current_player.name)}\n\n".center(60)
+         break
        elsif @board.board_filled?
-          puts  "#{winner}\n\n"
-          break
+         puts  "#{winner}\n\n"
+         break
        end
        current_player = switch_player(current_player)
     end
-
     start if again?
   end
 end
